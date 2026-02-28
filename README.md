@@ -13,7 +13,8 @@
 
 <br/>
 
-**BookingWorld** est une application **fullstack** permettant de **gérer** et **réserver** des ressources (salles, équipements, etc.) via une **API Symfony sécurisée JWT** et une interface **React moderne**.
+Ce projet a été réalisé dans le cadre du module Développement Web Fullstack.
+L’objectif était de mettre en pratique Symfony (API REST sécurisée) et React moderne avec gestion d’état avancée.
 
 </div>
 
@@ -21,7 +22,7 @@
 
 ## 📌 Présentation
 
-BookingHub est une application qui permet :
+BookingWorld est une application qui permet :
 
 - aux **utilisateurs** de consulter les ressources et effectuer des **réservations**
 - aux **administrateurs** de gérer les ressources et les réservations via un **panel admin**
