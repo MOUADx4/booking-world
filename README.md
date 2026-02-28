@@ -361,11 +361,4 @@ Projet pédagogique 2025.
 
 **Mouad Bounokra**  
 Projet Fullstack — BookingWorld (Symfony + React) — 2025
-# booking-world
-# booking-world
-# booking
-# booking
-# booking
-# booking
-# booking-world
-# booking-world
+
