@@ -54,6 +54,16 @@ export function AdminSidebar() {
         ))}
       </nav>
 
+      {/* Logout */}
+      <div className="px-4 py-6 border-t border-white/10">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl text-sm text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition duration-300"
+        >
+          <LogOut size={18} />
+          Se déconnecter
+        </button>
+      </div>
     </aside>
   );
 }

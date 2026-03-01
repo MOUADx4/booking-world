@@ -1,26 +1,24 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../context/AuthContext";
+import { Navbar } from "../../components/layout/Navbar";
+import { Footer } from "../../components/layout/Footer";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
-import { Calendar, Shield } from "lucide-react";
+
+import { Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function AdminLoginPage() {
-  const { login, user } = useAuth();
+export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const [email, setEmail] = useState("alice@example.com");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // Redirection propre si déjà admin
-  useEffect(() => {
-    if (user?.role === "admin") {
-      navigate("/admin");
-    }
-  }, [user, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,17 +27,7 @@ export default function AdminLoginPage() {
 
     try {
       await login(email, password);
-
-      const storedUser = localStorage.getItem("user");
-      const parsed = storedUser ? JSON.parse(storedUser) : null;
-
-      if (parsed?.role !== "admin") {
-        setError("Accès refusé : droits administrateur requis.");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      } else {
-        navigate("/admin");
-      }
+      navigate("/");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erreur de connexion");
     } finally {
@@ -48,77 +36,91 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0A1A2F] to-black px-4 overflow-hidden relative">
+    <div className="min-h-screen flex flex-col bg-slate-50">
+      <Navbar />
 
-      {/* Background glow */}
-      <div className="absolute -top-20 -left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl" />
-      <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
+      {/* HERO BACKGROUND */}
+      <section className="relative flex-1 flex items-center justify-center px-4 py-20 bg-gradient-to-br from-[#0A1A2F] to-black overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative w-full max-w-md"
-      >
-        {/* Logo */}
-        <div className="flex items-center justify-center gap-3 mb-10">
-          <div className="p-3 rounded-2xl bg-white/10 backdrop-blur">
-            <Calendar size={20} className="text-white" />
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative w-full max-w-md"
+        >
+          {/* Logo */}
+          <div className="flex items-center justify-center gap-3 mb-10">
+            <div className="p-3 rounded-2xl bg-white/10 backdrop-blur">
+              <Calendar size={22} className="text-white" />
+            </div>
+
+            <span className="text-2xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent">
+              BookingWorld
+            </span>
           </div>
 
-          <span className="text-2xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent">
-            BookingWorld
-          </span>
+          {/* Card */}
+          <div className="bg-white/80 backdrop-blur-xl border border-slate-200 rounded-3xl p-8 shadow-2xl">
+            <h1 className="text-xl font-semibold text-slate-900 mb-2">
+              Connexion
+            </h1>
 
-          <span className="text-xs text-blue-300 flex items-center gap-1 ml-2">
-            <Shield size={12} />
-            Admin
-          </span>
-        </div>
+            <p className="text-sm text-slate-600 mb-6">
+              Accédez à votre espace en toute sécurité.
+            </p>
 
-        {/* Card */}
-        <div className="bg-white/90 backdrop-blur-xl border border-slate-200 rounded-3xl p-8 shadow-2xl">
-          <h1 className="text-xl font-semibold text-slate-900 mb-2">
-            Espace administrateur
-          </h1>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <Input
+                label="Adresse email"
+                type="email"
+                placeholder="test@mail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+              />
 
-          <p className="text-sm text-slate-600 mb-6">
-            Connexion sécurisée au panneau de gestion.
-          </p>
+              <Input
+                label="Mot de passe"
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="current-password"
+              />
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <Input
-              label="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+              {error && (
+                <p className="text-sm text-red-600 font-medium">
+                  {error}
+                </p>
+              )}
 
-            <Input
-              label="Mot de passe"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="w-full rounded-2xl shadow-lg hover:scale-105 active:scale-95 transition"
+              >
+                Se connecter
+              </Button>
+            </form>
+          </div>
 
-            {error && (
-              <p className="text-sm text-red-600 font-medium">
-                {error}
-              </p>
-            )}
-
-            <Button
-              type="submit"
-              isLoading={isLoading}
-              className="w-full rounded-2xl shadow-lg hover:scale-105 active:scale-95 transition"
+          <p className="text-center text-sm text-slate-300 mt-6">
+            Pas encore de compte ?{" "}
+            <Link
+              to="/register"
+              className="text-white font-medium hover:underline"
             >
-              Accéder au panneau admin
-            </Button>
-          </form>
-        </div>
-      </motion.div>
+              S'inscrire
+            </Link>
+          </p>
+        </motion.div>
+      </section>
+
+      <Footer />
     </div>
   );
 }
