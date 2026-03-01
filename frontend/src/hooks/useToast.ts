@@ -8,7 +8,7 @@ export interface Toast {
   type: ToastType;
 }
 
-// Hook global de notification — contexte simplifié pour l'usage pédagogique
+// Hook global de notification 
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>([]);
 

@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Loader } from "../components/ui/Loader";
 
 /**
- * ✅ Route protégée JWT
+ * Route protégée JWT
  * On vérifie seulement le token
  */
 function ProtectedRoute() {
@@ -16,17 +16,17 @@ function ProtectedRoute() {
     return <Loader />;
   }
 
-  // ❌ Pas de token → login obligatoire
+  //  Pas de token → login obligatoire
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  // ✅ Token présent → accès autorisé
+  //  Token présent → accès autorisé
   return <Outlet />;
 }
 
 /**
- * ✅ Admin route guard
+ * Admin route guard
  */
 export function AdminProtectedRoute() {
   const { token, user, isLoading } = useAuth();

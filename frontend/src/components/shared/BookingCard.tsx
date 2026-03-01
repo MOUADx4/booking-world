@@ -10,7 +10,7 @@ interface BookingCardProps {
 }
 
 /* =========================
-   Status style premium
+   Status style 
 ========================= */
 function getStatusStyle(status: Booking["status"]) {
   switch (status) {

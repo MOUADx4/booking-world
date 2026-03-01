@@ -148,7 +148,7 @@ Crée un fichier `backend/.env.local` :
 
 ```env
 DATABASE_URL="mysql://root:@127.0.0.1:3306/bookinghub"
-JWT_PASSPHRASE=your_passphrase
+JWT_PASSPHRASE=d8e1eee016b98695b188450735e09805674140abc16b3a4b1ed17b3f3f7bb78e
 ```
 
 #### 3) Générer les clés JWT

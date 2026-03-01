@@ -27,7 +27,6 @@ class AdminResourceController extends AbstractController
         );
     }
 
-    // 🔥 Normalisation des types venant du frontend
     private function normalizeType(string $type): string
     {
         return match (strtolower($type)) {
@@ -49,7 +48,6 @@ class AdminResourceController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        // 🔥 Correction : on vérifie que c'est bien un tableau
         if (!is_array($data)) {
             return $this->json([
                 "status" => 400,
@@ -59,7 +57,6 @@ class AdminResourceController extends AbstractController
 
         $resource = new Resource();
 
-        // 🔥 Gestion propre des champs vides
         $resource->setName($data["name"] ?? "");
 
         $resource->setType(
@@ -112,7 +109,6 @@ class AdminResourceController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        // 🔥 Correction ici aussi
         if (!is_array($data)) {
             return $this->json(["error" => "Invalid JSON body"], 400);
         }

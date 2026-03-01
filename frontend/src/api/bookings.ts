@@ -37,7 +37,7 @@ export interface Booking {
  */
 
 /**
- * ✅ GET /api/bookings/me
+ * GET /api/bookings/me
  * Réservations de l'utilisateur connecté
  */
 export async function fetchMyBookings(): Promise<Booking[]> {
@@ -45,7 +45,7 @@ export async function fetchMyBookings(): Promise<Booking[]> {
 }
 
 /**
- * ✅ POST /api/bookings
+ * POST /api/bookings
  * Créer une réservation
  */
 export async function createBooking(data: {
@@ -61,7 +61,7 @@ export async function createBooking(data: {
 }
 
 /**
- * ✅ DELETE /api/bookings/{id}
+ *  DELETE /api/bookings/{id}
  * Annuler réservation utilisateur
  */
 export async function cancelBooking(id: number): Promise<void> {
@@ -77,7 +77,7 @@ export async function cancelBooking(id: number): Promise<void> {
  */
 
 /**
- * ✅ GET /api/admin/bookings
+ * GET /api/admin/bookings
  * Toutes les réservations (admin)
  */
 export async function fetchAllBookings(): Promise<Booking[]> {
@@ -85,7 +85,7 @@ export async function fetchAllBookings(): Promise<Booking[]> {
 }
 
 /**
- * ✅ DELETE /api/admin/bookings/{id}
+ * DELETE /api/admin/bookings/{id}
  * Supprimer réservation (admin)
  */
 export async function deleteBooking(id: number): Promise<void> {

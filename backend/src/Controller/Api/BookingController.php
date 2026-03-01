@@ -18,9 +18,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class BookingController extends AbstractController
 {
     // ============================
-    // ✅ GET MY BOOKINGS (IMPORTANT)
+    //  GET MY BOOKINGS 
     // ============================
-    // ⚠️ MUST BE BEFORE "/{id}"
+
     #[Route('/me', name: 'api_booking_me', methods: ['GET'])]
     public function myBookings(BookingRepository $repo): JsonResponse
     {
@@ -49,7 +49,7 @@ class BookingController extends AbstractController
     }
 
     // ============================
-    // ✅ CREATE BOOKING
+    // CREATE BOOKING
     // ============================
     #[Route('', name: 'api_booking_create', methods: ['POST'])]
     public function create(
@@ -77,7 +77,6 @@ class BookingController extends AbstractController
             ], 400);
         }
 
-        // ✅ Resource exists?
         $resource = $resourceRepo->find($data['resource_id']);
 
         if (!$resource) {
@@ -87,18 +86,18 @@ class BookingController extends AbstractController
             ], 404);
         }
 
-        // ✅ Create Booking
+        //  Create Booking
         $booking = new Booking();
         $booking->setDate(new \DateTimeImmutable($data['date']));
         $booking->setStartTime($data['startTime']);
         $booking->setEndTime($data['endTime']);
         $booking->setStatus("pending");
 
-        // ✅ Connected user via JWT
+        //  Connected user via JWT
         $booking->setUser($this->getUser());
         $booking->setResource($resource);
 
-        // ✅ Validation
+        // Validation
         $errors = $validator->validate($booking);
 
         if (count($errors) > 0) {
@@ -116,7 +115,7 @@ class BookingController extends AbstractController
             ], 400);
         }
 
-        // ✅ Save
+        //  Save
         $em->persist($booking);
         $em->flush();
 
@@ -129,7 +128,7 @@ class BookingController extends AbstractController
     }
 
     // ============================
-    // ✅ GET ONE BOOKING
+    //  GET ONE BOOKING
     // ============================
     #[Route('/{id}', name: 'api_booking_show', methods: ['GET'])]
     public function show(Booking $booking): JsonResponse
@@ -143,7 +142,7 @@ class BookingController extends AbstractController
     }
 
     // ============================
-    // ✅ UPDATE BOOKING STATUS
+    //  UPDATE BOOKING STATUS
     // ============================
     #[Route('/{id}', name: 'api_booking_update', methods: ['PUT'])]
     public function update(
@@ -162,12 +161,12 @@ class BookingController extends AbstractController
             ], 400);
         }
 
-        // ✅ Update only status
+        //  Update only status
         if (isset($data['status'])) {
             $booking->setStatus($data['status']);
         }
 
-        // ✅ Validation
+        // Validation
         $errors = $validator->validate($booking);
 
         if (count($errors) > 0) {
@@ -196,7 +195,7 @@ class BookingController extends AbstractController
     }
 
     // ============================
-    // ✅ CANCEL BOOKING
+    //  CANCEL BOOKING
     // ============================
     #[Route('/{id}', name: 'api_booking_cancel', methods: ['DELETE'])]
     public function cancel(
@@ -204,7 +203,7 @@ class BookingController extends AbstractController
         EntityManagerInterface $em
     ): JsonResponse {
 
-        // ❌ Already cancelled
+        //  Already cancelled
         if ($booking->getStatus() === "cancelled") {
             return $this->json([
                 "status" => 400,
@@ -212,7 +211,7 @@ class BookingController extends AbstractController
             ], 400);
         }
 
-        // ✅ Logical cancel
+        //  Logical cancel
         $booking->setStatus("cancelled");
         $em->flush();
 

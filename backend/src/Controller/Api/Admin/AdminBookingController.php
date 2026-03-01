@@ -13,11 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/admin/bookings')]
 class AdminBookingController extends AbstractController
 {
-    // ✅ GET ALL BOOKINGS (Admin only)
+    // ✅GET ALL BOOKINGS (Admin only)
     #[Route('', name: 'api_admin_bookings', methods: ['GET'])]
     public function list(BookingRepository $repo): JsonResponse
     {
-        // 🔒 Admin uniquement
+     
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->json(
@@ -28,17 +28,17 @@ class AdminBookingController extends AbstractController
         );
     }
 
-    // ✅ DELETE BOOKING (Admin only)
+    // DELETE BOOKING (Admin only)
     #[Route('/{id}', name: 'api_admin_booking_delete', methods: ['DELETE'])]
     public function delete(
         ?Booking $booking,
         EntityManagerInterface $em
     ): JsonResponse {
 
-        // 🔒 Admin uniquement
+       
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        // ❌ Booking introuvable → 404 propre
+        // Booking introuvable → 404 propre
         if (!$booking) {
             return $this->json([
                 "status" => 404,
@@ -46,7 +46,7 @@ class AdminBookingController extends AbstractController
             ], 404);
         }
 
-        // ✅ Suppression SQL
+        //  Suppression SQL
         $em->remove($booking);
         $em->flush();
 
