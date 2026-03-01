@@ -333,22 +333,6 @@ curl -X POST http://127.0.0.1:8000/api/admin/resources   -H "Authorization: Bear
 - Mot de passe : user123  
 - Rôle : ROLE_USER  
 
----
-
-## 📦 Déploiement
-
-### Backend
-- Hébergement possible : Render
-- Variables env à fournir :
-  - `DATABASE_URL`
-  - `JWT_PASSPHRASE`
-- Base : MySQL
-
-### Frontend
-```bash
-npm run build
-```
-Déploiement : Vercel
 
 ---
 
